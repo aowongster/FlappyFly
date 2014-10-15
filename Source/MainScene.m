@@ -7,6 +7,7 @@
 //
 
 #import "MainScene.h"
+#import "Obstacle.h"
 
 static const CGFloat scrollSpeed = 80.f;
 static const CGFloat firstObstaclePosition = 280.f;
@@ -99,8 +100,9 @@ static const CGFloat distanceBetweenObstacles = 160.f;
         // this is the first obstacle
         previousObstacleXPosition = firstObstaclePosition; // static const
     }
-    CCNode *obstacle = [CCBReader load:@"Obstacle"];
+    Obstacle *obstacle = (Obstacle *)[CCBReader load:@"Obstacle"];
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
+    [obstacle setupRandomPosition];
     [_physicsNode addChild:obstacle];
     [_obstacles addObject:obstacle];
 }
