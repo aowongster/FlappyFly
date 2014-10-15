@@ -7,7 +7,11 @@
 //
 
 #import "MainScene.h"
+
 static const CGFloat scrollSpeed = 80.f;
+static const CGFloat firstObstaclePosition = 280.f;
+static const CGFloat distanceBetweenObstacles = 160.f;
+
 @implementation MainScene {
     CCSprite *_hero;
     CCPhysicsNode *_physicsNode;
@@ -15,10 +19,17 @@ static const CGFloat scrollSpeed = 80.f;
     CCNode *_ground2;
     NSArray *_grounds;
     NSTimeInterval _sinceTouch;
+    NSMutableArray *_obstacles;
 }
 
 - (void)didLoadFromCCB {
     _grounds = @[_ground1, _ground2];
+    
+    _obstacles = [NSMutableArray array];
+    [self spawnNewObstacle];
+    [self spawnNewObstacle];
+    [self spawnNewObstacle];
+    
     self.userInteractionEnabled = TRUE;
 }
 
@@ -53,11 +64,44 @@ static const CGFloat scrollSpeed = 80.f;
             ground.position = ccp(ground.position.x + 2 * ground.contentSize.width, ground.position.y);
         }
     }
+    
+    // unlimited barriers
+    NSMutableArray *offScreenObstacles = nil;
+    for (CCNode *obstacle in _obstacles) {
+        CGPoint obstacleWorldPosition = [_physicsNode convertToWorldSpace:obstacle.position];
+        CGPoint obstacleScreenPosition = [self convertToNodeSpace:obstacleWorldPosition];
+        if (obstacleScreenPosition.x < -obstacle.contentSize.width) {
+            if (!offScreenObstacles) {
+                offScreenObstacles = [NSMutableArray array];
+            }
+            [offScreenObstacles addObject:obstacle];
+        }
+    }
+    for (CCNode *obstacleToRemove in offScreenObstacles) {
+        [obstacleToRemove removeFromParent];
+        [_obstacles removeObject:obstacleToRemove];
+        // for each removed obstacle, add a new one
+        [self spawnNewObstacle];
+    }
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     [_hero.physicsBody applyImpulse:ccp(0, 400.f)];
     [_hero.physicsBody applyAngularImpulse:10000.f];
     _sinceTouch = 0.f;
+    
+}
+
+- (void)spawnNewObstacle {
+    CCNode *previousObstacle = [_obstacles lastObject];
+    CGFloat previousObstacleXPosition = previousObstacle.position.x;
+    if (!previousObstacle) {
+        // this is the first obstacle
+        previousObstacleXPosition = firstObstaclePosition; // static const
+    }
+    CCNode *obstacle = [CCBReader load:@"Obstacle"];
+    obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
+    [_physicsNode addChild:obstacle];
+    [_obstacles addObject:obstacle];
 }
 @end
