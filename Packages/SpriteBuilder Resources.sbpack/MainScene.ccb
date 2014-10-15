@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>19</integer>
+	<integer>20</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -625,7 +625,7 @@
 					</dict>
 					<dict>
 						<key>UUID</key>
-						<integer>16</integer>
+						<integer>19</integer>
 						<key>baseClass</key>
 						<string>CCBFile</string>
 						<key>children</key>
@@ -665,40 +665,40 @@
 							<key>points</key>
 							<array>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>3.9140472412109375</real>
+									<real>3.00390625</real>
 								</array>
 								<array>
-									<real>0.0</real>
-									<real>23</real>
+									<real>7.3046875</real>
+									<real>19.941421508789062</real>
 								</array>
 								<array>
-									<real>33</real>
-									<real>23</real>
+									<real>28.19140625</real>
+									<real>20.457046508789062</real>
 								</array>
 								<array>
-									<real>33</real>
-									<real>0.0</real>
+									<real>29.41015625</real>
+									<real>1.69921875</real>
 								</array>
 							</array>
 							<key>polygons</key>
 							<array>
 								<array>
 									<array>
-										<real>33</real>
-										<real>0.0</real>
+										<real>29.41015625</real>
+										<real>1.69921875</real>
 									</array>
 									<array>
-										<real>33</real>
-										<real>23</real>
+										<real>28.19140625</real>
+										<real>20.457046508789062</real>
 									</array>
 									<array>
-										<real>0.0</real>
-										<real>23</real>
+										<real>7.3046875</real>
+										<real>19.941421508789062</real>
 									</array>
 									<array>
-										<real>0.0</real>
-										<real>0.0</real>
+										<real>3.9140472412109375</real>
+										<real>3.00390625</real>
 									</array>
 								</array>
 							</array>
@@ -720,10 +720,10 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.45937499403953552</real>
-									<real>269</real>
+									<real>156.00003051757812</real>
+									<real>278</real>
 									<integer>0</integer>
-									<integer>2</integer>
+									<integer>0</integer>
 									<integer>0</integer>
 								</array>
 							</dict>

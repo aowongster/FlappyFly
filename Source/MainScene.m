@@ -136,14 +136,16 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 }
 
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
-    NSLog(@"Game Over");
+    // NSLog(@"Game Over");
     [self gameOver];
     return TRUE;
 }
 
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero goal:(CCNode *)goal {
     [goal removeFromParent];
-    _points++;
+    //NSLog(@"goal passed");
+    if(!_gameOver)
+        _points++;
     _scoreLabel.string = [NSString stringWithFormat:@"%d", _points];
     return TRUE;
 }
