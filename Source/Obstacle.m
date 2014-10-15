@@ -28,4 +28,12 @@ static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipe
     _topPipe.position = ccp(_topPipe.position.x, minimumYPositionTopPipe + (random * range));
     _bottomPipe.position = ccp(_bottomPipe.position.x, _topPipe.position.y + pipeDistance);
 }
+
+- (void)didLoadFromCCB {
+    _topPipe.physicsBody.collisionType = @"level";
+    _topPipe.physicsBody.sensor = TRUE;
+    _bottomPipe.physicsBody.collisionType = @"level";
+    _bottomPipe.physicsBody.sensor = TRUE;
+}
+
 @end

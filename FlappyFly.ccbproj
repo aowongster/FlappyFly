@@ -79,10 +79,7 @@
 			<true/>
 		</dict>
 		<key>FlappyFlyArtPack</key>
-		<dict>
-			<key>isDirty</key>
-			<true/>
-		</dict>
+		<dict/>
 		<key>Sprites</key>
 		<dict/>
 		<key>ccbResources</key>

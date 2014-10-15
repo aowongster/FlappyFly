@@ -9,29 +9,45 @@
 #import "MainScene.h"
 #import "Obstacle.h"
 
-static const CGFloat scrollSpeed = 80.f;
-static const CGFloat firstObstaclePosition = 280.f;
-static const CGFloat distanceBetweenObstacles = 160.f;
-
 @implementation MainScene {
     CCSprite *_hero;
     CCPhysicsNode *_physicsNode;
     CCNode *_ground1;
     CCNode *_ground2;
+    CCButton *_restartButton;
+    
     NSArray *_grounds;
     NSTimeInterval _sinceTouch;
     NSMutableArray *_obstacles;
 }
 
+static const CGFloat scrollSpeed = 80.f;
+static const CGFloat firstObstaclePosition = 280.f;
+static const CGFloat distanceBetweenObstacles = 160.f;
+
+typedef NS_ENUM(NSInteger, DrawingOrder) {
+    DrawingOrderPipes,
+    DrawingOrderGround,
+    DrawingOrdeHero
+};
+
 - (void)didLoadFromCCB {
+    self.userInteractionEnabled = TRUE;
     _grounds = @[_ground1, _ground2];
-    
+    for (CCNode *ground in _grounds) {
+        // set collision txpe
+        ground.physicsBody.collisionType = @"level";
+        ground.zOrder = DrawingOrderGround;
+    }
+    // set this class as delegate
+    _physicsNode.collisionDelegate = self;
+    // set collision txpe
+    _hero.physicsBody.collisionType = @"hero";
+    _hero.zOrder = DrawingOrdeHero;
     _obstacles = [NSMutableArray array];
     [self spawnNewObstacle];
     [self spawnNewObstacle];
     [self spawnNewObstacle];
-    
-    self.userInteractionEnabled = TRUE;
 }
 
 
@@ -102,8 +118,20 @@ static const CGFloat distanceBetweenObstacles = 160.f;
     }
     Obstacle *obstacle = (Obstacle *)[CCBReader load:@"Obstacle"];
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
+    obstacle.zOrder = DrawingOrderPipes;
+    
     [obstacle setupRandomPosition];
     [_physicsNode addChild:obstacle];
     [_obstacles addObject:obstacle];
+}
+
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
+    NSLog(@"Game Over");
+    _restartButton.visible = TRUE;
+    return TRUE;
+}
+- (void)restart {
+    CCScene *scene = [CCBReader loadAsScene:@"MainScene"];
+    [[CCDirector sharedDirector] replaceScene:scene];
 }
 @end
