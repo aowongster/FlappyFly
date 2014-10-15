@@ -19,6 +19,9 @@
     NSArray *_grounds;
     NSTimeInterval _sinceTouch;
     NSMutableArray *_obstacles;
+    
+    BOOL _gameOver;
+    CGFloat _scrollSpeed;
 }
 
 static const CGFloat scrollSpeed = 80.f;
@@ -33,6 +36,8 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 - (void)didLoadFromCCB {
     self.userInteractionEnabled = TRUE;
+    _scrollSpeed = 80.f;
+    
     _grounds = @[_ground1, _ground2];
     for (CCNode *ground in _grounds) {
         // set collision txpe
@@ -103,9 +108,11 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    [_hero.physicsBody applyImpulse:ccp(0, 400.f)];
-    [_hero.physicsBody applyAngularImpulse:10000.f];
-    _sinceTouch = 0.f;
+    if(!_gameOver){
+        [_hero.physicsBody applyImpulse:ccp(0, 400.f)];
+        [_hero.physicsBody applyAngularImpulse:10000.f];
+        _sinceTouch = 0.f;
+    }
     
 }
 
@@ -127,11 +134,27 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
     NSLog(@"Game Over");
-    _restartButton.visible = TRUE;
+    [self gameOver];
     return TRUE;
 }
 - (void)restart {
     CCScene *scene = [CCBReader loadAsScene:@"MainScene"];
     [[CCDirector sharedDirector] replaceScene:scene];
+}
+
+- (void)gameOver {
+    if (!_gameOver) {
+        _scrollSpeed = 0.f;
+        _gameOver = TRUE;
+        _restartButton.visible = TRUE;
+        _hero.rotation = 90.f;
+        _hero.physicsBody.allowsRotation = FALSE;
+        [_hero stopAllActions];
+        CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:0.2f position:ccp(-2, 2)];
+        CCActionInterval *reverseMovement = [moveBy reverse];
+        CCActionSequence *shakeSequence = [CCActionSequence actionWithArray:@[moveBy, reverseMovement]];
+        CCActionEaseBounce *bounce = [CCActionEaseBounce actionWithAction:shakeSequence];
+        [self runAction:bounce];
+    }
 }
 @end
