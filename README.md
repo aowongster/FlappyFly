@@ -1,4 +1,7 @@
-Flappy Bird Clone
+[![Build Status](https://travis-ci.org/aowongster/FlappyFly.svg?branch=master)](https://travis-ci.org/aowongster/FlappyFly)
 
-from makegameswith.us using SpriteBuilder
+### Flappy Bird Clone
+
+from [makegameswith.us](http://makegameswith.us) using SpriteBuilder
+
 https://www.makegameswith.us/gamernews/369/build-your-own-flappy-bird-with-spritebuilder-and
