@@ -22,6 +22,7 @@
     
     NSInteger _points;
     CCLabelTTF *_scoreLabel;
+    CCLabelTTF *_highscoreLabel;
     
     BOOL _gameOver;
     CGFloat _scrollSpeed;
@@ -56,6 +57,8 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     [self spawnNewObstacle];
     [self spawnNewObstacle];
     [self spawnNewObstacle];
+    
+    [self updateHighscore];
 }
 
 
@@ -138,6 +141,14 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
     // NSLog(@"Game Over");
     [self gameOver];
+    
+    NSNumber *highScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"highscore"];
+    if (_points > [highScore intValue]) {
+        // new highscore!
+        highScore = [NSNumber numberWithInt:_points];
+        [[NSUserDefaults standardUserDefaults] setObject:highScore forKey:@"highscore"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     return TRUE;
 }
 
@@ -169,4 +180,12 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         [self runAction:bounce];
     }
 }
+
+- (void)updateHighscore {
+    NSNumber *newHighscore = [[NSUserDefaults standardUserDefaults] objectForKey:@"highscore"];
+    if (newHighscore) {
+        _highscoreLabel.string = [NSString stringWithFormat:@"%d", [newHighscore intValue]];
+    }
+}
+
 @end
