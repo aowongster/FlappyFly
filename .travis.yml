@@ -1,1 +1,6 @@
 language: objective-c
+before_install:
+  - brew update
+  - brew install xctool
+xcode_project: FlappyFly.xcodeproj
+xcode_scheme: FlappyFly
