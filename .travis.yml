@@ -3,3 +3,4 @@ before_install:
   - brew update
 xcode_project: FlappyFly.xcodeproj
 xcode_scheme: FlappyFly
+xcode_sdk: iphonesimulator
