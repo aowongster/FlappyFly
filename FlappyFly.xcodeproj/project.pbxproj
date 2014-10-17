@@ -456,7 +456,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = FlappyFly;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d4c46211-566b-4862-93af-3400eb858de2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -487,7 +487,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = FlappyFly;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d4c46211-566b-4862-93af-3400eb858de2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
